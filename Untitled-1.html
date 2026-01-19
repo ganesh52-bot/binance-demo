@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Binance-Inspired Trading Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0e11;
+      --card: #141a1f;
+      --card-light: #1e2329;
+      --text: #eaecef;
+      --muted: #98a2b3;
+      --accent: #f0b90b;
+      --positive: #0ecb81;
+      --negative: #f6465d;
+      --border: #2b3139;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1200px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      background: #0b0e11;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%);
+      box-shadow: 0 0 0 4px rgba(240, 185, 11, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .pill {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .pill.primary {
+      background: var(--accent);
+      color: #111;
+      border: none;
+    }
+
+    .hero {
+      padding: 80px 0 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a1f26;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top, rgba(240, 185, 11, 0.15), transparent 55%),
+        var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: var(--card-light);
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+    }
+
+    .stat h3 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      font-size: 1.6rem;
+    }
+
+    .market-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .market-table th,
+    .market-table td {
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    .market-table thead {
+      background: #1b1f26;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .market-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .price-up {
+      color: var(--positive);
+      font-weight: 600;
+    }
+
+    .price-down {
+      color: var(--negative);
+      font-weight: 600;
+    }
+
+    .badge {
+      background: rgba(14, 203, 129, 0.12);
+      color: var(--positive);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 48px;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .footer-grid h4 {
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span class="logo-mark"></span>
+        BinanceX
+      </div>
+      <nav class="nav-links">
+        <a href="#markets">Markets</a>
+        <a href="#trade">Trade</a>
+        <a href="#earn">Earn</a>
+        <a href="#learn">Learn</a>
+        <a href="#support">Support</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="pill" href="#">Sign In</a>
+        <a class="pill primary" href="#">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div>
+        <div class="hero-badge">⚡ Global crypto gateway</div>
+        <h1>Trade crypto smarter with real-time markets, advanced tools, and curated insights.</h1>
+        <p>
+          Experience an exchange-style dashboard built for speed. Track top movers, dive into charts,
+          and manage your portfolio with confidence.
+        </p>
+        <div class="hero-actions">
+          <a class="pill primary" href="#">Start Trading</a>
+          <a class="pill" href="#">View Live Prices</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Portfolio snapshot</h2>
+        <p>All balances updated within the last 10 seconds.</p>
+        <div class="stat-grid">
+          <div class="stat">
+            <p>Total balance</p>
+            <h3>$42,518.40</h3>
+            <span class="badge">+3.2% today</span>
+          </div>
+          <div class="stat">
+            <p>Spot assets</p>
+            <h3>$29,640.10</h3>
+            <p class="price-up">+$1,050.80</p>
+          </div>
+          <div class="stat">
+            <p>Futures margin</p>
+            <h3>$12,878.30</h3>
+            <p class="price-down">-$240.50</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="markets" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Top markets</h2>
+          <span class="badge">Updated live</span>
+        </div>
+        <table class="market-table">
+          <thead>
+            <tr>
+              <th>Pair</th>
+              <th>Last Price</th>
+              <th>24h Change</th>
+              <th>24h Volume</th>
+              <th>Trend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BTC/USDT</td>
+              <td>$52,410.20</td>
+              <td class="price-up">+4.28%</td>
+              <td>$18.4B</td>
+              <td>Rising</td>
+            </tr>
+            <tr>
+              <td>ETH/USDT</td>
+              <td>$2,840.55</td>
+              <td class="price-up">+2.11%</td>
+              <td>$7.3B</td>
+              <td>Steady</td>
+            </tr>
+            <tr>
+              <td>SOL/USDT</td>
+              <td>$112.18</td>
+              <td class="price-down">-1.82%</td>
+              <td>$1.2B</td>
+              <td>Cooling</td>
+            </tr>
+            <tr>
+              <td>BNB/USDT</td>
+              <td>$338.44</td>
+              <td class="price-up">+0.92%</td>
+              <td>$842M</td>
+              <td>Stable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="trade" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Trade like a pro</h2>
+          <a class="pill" href="#">Explore tools</a>
+        </div>
+        <div class="card-grid">
+          <article class="info-card">
+            <h3>Spot &amp; Margin</h3>
+            <p>Access deep liquidity, tight spreads, and advanced order types for every trading style.</p>
+          </article>
+          <article class="info-card">
+            <h3>Futures Strategy</h3>
+            <p>Deploy risk-managed positions with real-time funding rates and liquidation alerts.</p>
+          </article>
+          <article class="info-card">
+            <h3>Automated Bots</h3>
+            <p>Launch grid, DCA, and rebalancing bots with fully customizable parameters.</p>
+          </article>
+          <article class="info-card">
+            <h3>Institutional Liquidity</h3>
+            <p>Connect via API with enterprise-grade reliability and dedicated market data feeds.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="learn" class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Learn &amp; earn</h2>
+          <a class="pill" href="#">View academy</a>
+        </div>
+        <div class="card-grid">
+          <article class="info-card">
+            <h3>Daily market brief</h3>
+            <p>Stay ahead with curated insights on trends, macro news, and on-chain indicators.</p>
+          </article>
+          <article class="info-card">
+            <h3>Security center</h3>
+            <p>Enable passkeys, set withdrawal limits, and monitor trusted devices in one place.</p>
+          </article>
+          <article class="info-card">
+            <h3>Earn programs</h3>
+            <p>Put idle assets to work with flexible savings, staking, and DeFi vaults.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="support">
+    <div class="container footer-grid">
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li>Exchange</li>
+          <li>Wallet</li>
+          <li>Pay</li>
+          <li>Launchpad</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li>Help Center</li>
+          <li>API Docs</li>
+          <li>Fees</li>
+          <li>Status</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li>About</li>
+          <li>Careers</li>
+          <li>Press</li>
+          <li>Community</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li>support@binancex.io</li>
+          <li>+1 (415) 555-0199</li>
+          <li>24/7 Live chat</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

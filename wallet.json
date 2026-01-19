@@ -1,0 +1,9 @@
+{
+  "name": "binance-inspired-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack Binance-inspired landing page demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
